@@ -47,7 +47,6 @@ export async function generateMetadata(
 
     let title = null
     let description = null
-    console.log(res?.data?.post?.seo)
 
     if( res?.data?.post?.seo?.title ) {
         title = res?.data?.post?.seo?.title
@@ -58,16 +57,16 @@ export async function generateMetadata(
     if( res?.data?.post?.seo?.metaDesc ) {
         description = res?.data?.post?.seo?.metaDesc
     } else {
-        description = parser(res?.data?.post?.acfBlog?.introductionText)
+        description = res?.data?.post?.acfBlog?.introductionText.slice(3,159) + '...'
     }
  
-  	// optionally access and extend (rather than replace) parent metadata
-  	//const previousImages = (await parent).openGraph?.images || []
+    // optionally access and extend (rather than replace) parent metadata
+    //const previousImages = (await parent).openGraph?.images || []
  
-  	return {
+    return {
     	title: title,
     	description: description
-  	}
+    }
 }
 
 export default async function BlogPage({
