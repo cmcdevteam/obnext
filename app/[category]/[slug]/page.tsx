@@ -7,6 +7,68 @@ import LandscapeHeader from './landscape-header'
 import Quote from './quote'
 import CentralisedImage from './centralised-image'
 import Text from './text-block'
+import { Metadata, ResolvingMetadata } from 'next'
+ 
+type Props = {
+  	params: { slug: string }
+}
+ 
+export async function generateMetadata(
+  	{ params }: Props,
+  	parent?: ResolvingMetadata
+): Promise<Metadata> {
+  	// fetch data
+  	const res = await fetch( process.env.GRAPHQL_API_URL, 
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				query: `query getBlogSEO($slug: ID!) {
+                            post(id: $slug, idType: SLUG) {
+                                seo {
+                                    title
+                                    metaDesc
+                                }
+                                title
+                                acfBlog {
+                                    introductionText
+                                }
+                            }
+                        }`,
+                variables: {
+                    "slug": params.slug
+                }
+			}),
+			next: { revalidate: 1 },
+	})
+    .then((res) => res.json())
+
+    let title = null
+    let description = null
+    console.log(res?.data?.post?.seo)
+
+    if( res?.data?.post?.seo?.title ) {
+        title = res?.data?.post?.seo?.title
+    } else {
+        title = res?.data?.post?.title
+    }
+
+    if( res?.data?.post?.seo?.metaDesc ) {
+        description = res?.data?.post?.seo?.metaDesc
+    } else {
+        description = parser(res?.data?.post?.acfBlog?.introductionText)
+    }
+ 
+  	// optionally access and extend (rather than replace) parent metadata
+  	//const previousImages = (await parent).openGraph?.images || []
+ 
+  	return {
+    	title: title,
+    	description: description
+  	}
+}
 
 export default async function BlogPage({
     params
