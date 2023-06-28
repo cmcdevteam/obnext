@@ -7,7 +7,7 @@ import LandscapeHeader from './landscape-header'
 import Quote from './quote'
 import CentralisedImage from './centralised-image'
 import Text from './text-block'
-import { Metadata, ResolvingMetadata } from 'next'
+/*import { Metadata, ResolvingMetadata } from 'next'
  
 type Props = {
   	params: { slug: string }
@@ -68,7 +68,7 @@ export async function generateMetadata(
     	title: title,
     	description: description
   	}
-}
+}*/
 
 export default async function BlogPage({
     params
