@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import parser from 'html-react-parser'
 import { SlArrowDown } from 'react-icons/sl'
+import NewsletterForm from './newsletter-form'
 
 export default async function HomePage() {
     const fetchedData = await fetch( process.env.GRAPHQL_API_URL, 
@@ -108,6 +109,7 @@ export default async function HomePage() {
             </div>
             <div className="h-2 bg-[#581F5B]"></div>
             
+            <NewsletterForm />
         </section>
         </>
     )
