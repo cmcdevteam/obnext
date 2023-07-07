@@ -5,7 +5,7 @@ const nextConfig = {
     serverActions: true,
   },
   images: {
-    domains: ['obwp.creativewiz.org'],
+    domains: ['obwp.creativewiz.org', 'headless.local'],
   },
   typescript: {
     // !! WARN !!
